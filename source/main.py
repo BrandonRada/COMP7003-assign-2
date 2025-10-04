@@ -135,6 +135,11 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
+    valid_filters = ["tcp", "udp", "icmp", "icmp6", "arp", "dns", "any"]
+    if args.filter not in valid_filters:
+        print(f"Error: Unsupported filter '{args.filter}'. Valid options are: {', '.join(valid_filters)}")
+        stop_event.set()
+
     if args.interface.lower() == "any":
         capture_on_all_interfaces(args.filter, args.count)
     else:
